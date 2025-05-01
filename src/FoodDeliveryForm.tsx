@@ -6,8 +6,11 @@ type FoodDeliveryFormType = {
 }
 
 export const FoodDeliveryForm = () => {
-  const { register, handleSubmit } = useForm<FoodDeliveryFormType>()
-                                // ^ provide the type and now form knows what to expect
+  const { register, handleSubmit } = useForm<FoodDeliveryFormType>({
+    defaultValues: {
+      customerName: 'snoopy'
+    }
+  })
 
   const onSubmit = (formData: FoodDeliveryFormType) => {
     console.log(formData)
@@ -19,9 +22,7 @@ export const FoodDeliveryForm = () => {
         <input
           type="text"
           className="form-control"
-          {...register('customerName', {
-            value: 'Vinnie'
-          })}
+          {...register('customerName')}
           // ^ destructuring register attaches all of the props
           // with same name like name, ref, onChange, onBlur to the input
         />
