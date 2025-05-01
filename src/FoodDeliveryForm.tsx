@@ -7,24 +7,23 @@ type FoodDeliveryFormType = {
 
 export const FoodDeliveryForm = () => {
   const { register, handleSubmit } = useForm<FoodDeliveryFormType>()
+                                // ^ provide the type and now form knows what to expect
 
   const onSubmit = (formData: FoodDeliveryFormType) => {
     console.log(formData)
   }
 
-  const onError = (errors) => {
-    console.log(errors)
-  }
-
   return (
-    <form autoComplete="off" onSubmit={handleSubmit(onSubmit, onError)}>
+    <form autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
       <div className="form-floating mb-3">
         <input
           type="text"
           className="form-control"
           {...register('customerName', {
-            required: 'customer name is required'
+            value: 'Vinnie'
           })}
+          // ^ destructuring register attaches all of the props
+          // with same name like name, ref, onChange, onBlur to the input
         />
         <label>Customer Name</label>
       </div>
