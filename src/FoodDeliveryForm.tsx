@@ -1,8 +1,9 @@
-import { useForm } from 'react-hook-form'
+import { useForm, FieldErrors } from 'react-hook-form'
 
 type FoodDeliveryFormType = {
   customerName: string;
   mobile: string;
+  email: string;
 }
 
 export const FoodDeliveryForm = () => {
@@ -16,8 +17,12 @@ export const FoodDeliveryForm = () => {
     console.log(formData)
   }
 
+  const onError = (err: FieldErrors) => {
+    console.log(err)
+  }
+
   return (
-    <form autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
+    <form autoComplete="off" noValidate onSubmit={handleSubmit(onSubmit, onError)}>
       <div className="form-floating mb-3">
         <input
           type="text"
@@ -29,12 +34,31 @@ export const FoodDeliveryForm = () => {
         <label>Customer Name</label>
       </div>
       <div className="form-floating mb-3">
-      <input
+        <input
           type="text"
           className="form-control"
-          {...register('mobile')}
+          {...register('mobile', {
+            minLength: 10,
+            maxLength: 10,
+            required: true
+          })}
         />
         <label>Mobile</label>
+      </div>
+      <div className="form-floating mb-3">
+        <input
+          type="email"
+          className="form-control"
+          {
+            ...register('email', {
+              pattern: {
+                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                message: 'valid email required'
+              }
+            })
+          }
+        />
+        <label>Email</label>
       </div>
       <button type="submit" className="btn btn-primary">Submit</button>
     </form>
