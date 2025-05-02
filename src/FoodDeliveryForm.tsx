@@ -7,7 +7,7 @@ type FoodDeliveryFormType = {
 }
 
 export const FoodDeliveryForm = () => {
-  const { register, handleSubmit, formState } = useForm<FoodDeliveryFormType>({
+  const { register, handleSubmit, formState: { errors } } = useForm<FoodDeliveryFormType>({
     defaultValues: {
       customerName: 'snoopy'
     }
@@ -59,8 +59,8 @@ export const FoodDeliveryForm = () => {
           }
         />
         <label>Email</label>
-        { formState.errors.email &&
-          <div>{formState.errors.email?.message}</div>
+        { errors.email &&
+          <div>{errors.email?.message}</div>
         }
       </div>
       <button type="submit" className="btn btn-primary">Submit</button>
