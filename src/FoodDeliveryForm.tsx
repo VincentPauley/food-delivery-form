@@ -54,6 +54,20 @@ export const FoodDeliveryForm = () => {
               pattern: {
                 value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
                 message: 'valid email required'
+              },
+              validate: {
+                notFake: (value) => {
+                  if (value === 'email@gmail.com') {
+                    return 'particular email is blocked'
+                  }
+                  return true
+                },
+                notOnBlockedHosts: (value) => {
+                  if (value.endsWith('.gov')) {
+                    return 'that TLD is not supported'
+                  }
+                  return true
+                }
               }
             })
           }
