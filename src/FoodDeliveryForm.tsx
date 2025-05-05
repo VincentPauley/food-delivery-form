@@ -1,5 +1,7 @@
 import { useForm, FieldErrors } from 'react-hook-form'
 
+import { TextField } from './controls/TextField'
+
 type FoodDeliveryFormType = {
   customerName: string;
   mobile: string;
@@ -9,7 +11,7 @@ type FoodDeliveryFormType = {
 export const FoodDeliveryForm = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<FoodDeliveryFormType>({
     defaultValues: {
-      customerName: 'snoopy'
+      customerName: ''
     }
   })
 
@@ -24,26 +26,30 @@ export const FoodDeliveryForm = () => {
   return (
     <form autoComplete="off" noValidate onSubmit={handleSubmit(onSubmit, onError)}>
       <div className="form-floating mb-3">
-        <input
-          type="text"
-          className="form-control"
-          {...register('customerName')}
-          // ^ destructuring register attaches all of the props
-          // with same name like name, ref, onChange, onBlur to the input
+        <TextField
+          label="Customer Name"
+          {...register('customerName', {
+            required: 'This field is required.'
+          })}
+          error={errors.customerName}
         />
-        <label>Customer Name</label>
       </div>
       <div className="form-floating mb-3">
-        <input
-          type="text"
-          className="form-control"
+        <TextField
+          label="Mobile Number"
           {...register('mobile', {
-            minLength: 10,
-            maxLength: 10,
-            required: true
+            minLength: {
+              value: 10,
+              message: 'Must be 10 digits'
+            },
+            maxLength: {
+              value: 10,
+              message: 'Must be 10 digits'
+            },
+            required: 'This field is required.'
           })}
+          error={errors.mobile}
         />
-        <label>Mobile</label>
       </div>
       <div className="form-floating mb-3">
         <input
