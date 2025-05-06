@@ -52,9 +52,8 @@ export const FoodDeliveryForm = () => {
         />
       </div>
       <div className="form-floating mb-3">
-        <input
-          type="email"
-          className="form-control"
+        <TextField
+          label="Email"
           {
             ...register('email', {
               pattern: {
@@ -77,11 +76,8 @@ export const FoodDeliveryForm = () => {
               }
             })
           }
+          error={errors.email}
         />
-        <label>Email</label>
-        { errors.email &&
-          <div>{errors.email?.message}</div>
-        }
       </div>
       <button type="submit" className="btn btn-primary">Submit</button>
     </form>
